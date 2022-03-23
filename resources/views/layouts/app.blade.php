@@ -54,7 +54,7 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->full_name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -79,5 +79,12 @@
             @yield('content')
         </main>
     </div>
+    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            $('.alert-flash').fadeOut(5000);
+        });
+    </script>
 </body>
 </html>
