@@ -9,15 +9,10 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    @yield('styles')
 </head>
 <body>
     <div id="app">
@@ -32,9 +27,20 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
+                    @guest
+                    @else
                     <ul class="navbar-nav me-auto">
-
+                        <li class="nav-item">
+                        <a class="nav-link" href="{{ route('departments.index') }}">Department</a>
+                    </li>
                     </ul>
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                        <a class="nav-link" href="{{ route('categories.index') }}">Category</a>
+                    </li>
+                    </ul>
+                    @endguest
+
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
@@ -79,7 +85,11 @@
             @yield('content')
         </main>
     </div>
-    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    @yield('scripts')
+    
     <script type="text/javascript">
         $(document).ready(function(){
 

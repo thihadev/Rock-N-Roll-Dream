@@ -1,5 +1,8 @@
 @extends('layouts.app')
-
+@section('styles')
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+@stop
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -8,7 +11,7 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('register.custom') }}">
                         @csrf
 
                          <div class="row mb-3">
@@ -16,12 +19,52 @@
 
                             <div class="col-md-6">
                                 <select id="department_id" type="text" class="form-control @error('department_id') is-invalid @enderror" name="department_id" value="{{ old('department_id') }}" required autocomplete="department_id" autofocus>
-                                    <option value="1">Myanmar</option>
-                                    <option value="2">English</option>
-                                    <option value="3">Math</option>
+                                    <option value="">Select One</option>
+                                    @foreach($departments as $dept)
+                                    <option value="{{$dept->id}}">{{$dept->code}}</option>
+                                    @endforeach
                                 </select>
 
                                 @error('department_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="role" class="col-md-4 col-form-label text-md-end">{{ __('Role') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="role" type="text" class="form-control @error('role') is-invalid @enderror" name="role" value="{{ old('role') }}" required autocomplete="role" autofocus>
+                                    <option value="">Select One</option>
+                                    <option value="1">Quality Assurance Manager</option>
+                                    <option value="2">QA coordinator</option>
+                                    <option value="3">Staff</option>
+                                    <option value="4">Sysadmin</option>
+                                </select>
+
+                                @error('role')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+
+                        <div class="row mb-3 staff_type">
+                            <label for="staff_type" class="col-md-4 col-form-label text-md-end">{{ __('Staff Type') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="staff_type" type="text" class="form-control @error('staff_type') is-invalid @enderror" name="staff_type" value="{{ old('staff_type') }}" autocomplete="staff_type" autofocus>
+                                    <option value="">Select One</option>
+                                    <option value="1">Academic</option>
+                                    <option value="2">Support</option>
+                                </select>
+
+                                @error('staff_type')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -34,6 +77,7 @@
 
                             <div class="col-md-6">
                                 <select id="gender" type="text" class="form-control @error('gender') is-invalid @enderror" name="gender" value="{{ old('gender') }}" required autocomplete="gender" autofocus>
+                                    <option value="">Select One</option>
                                     <option value="1">Male</option>
                                     <option value="2">Female</option>
                                     <option value="3">Other</option>
@@ -152,4 +196,21 @@
         </div>
     </div>
 </div>
+<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+<script type="text/javascript">
+ $(document).ready(function() {
+            $('.staff_type').hide();
+            $('#role').on('change', function(){
+            var roleID = $(this).val();
+            if(roleID == 3)
+            {
+                $('.staff_type').show();
+            }else{
+                $('.staff_type').hide();
+            }
+           
+        });
+
+    });
+</script>
 @endsection

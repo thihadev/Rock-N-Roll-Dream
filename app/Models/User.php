@@ -19,7 +19,6 @@ class User extends Authenticatable
      */
     protected $fillable = [
         "department_id",
-        "role_id",
         "first_name",
         "last_name",
         "email",
@@ -28,6 +27,7 @@ class User extends Authenticatable
         'password',
         "mobile_no",
         "staff_type",
+        "role",
     ];
 
     /**
@@ -52,5 +52,36 @@ class User extends Authenticatable
     public function getFullNameAttribute()
     {
         return "{$this->first_name} {$this->last_name}";
+    }
+
+    public function gender()
+    {
+        if ($this->gender == 1) { return 'Male';} 
+        if ($this->gender == 2) { return 'Female';} 
+        if ($this->gender == 3) { return 'Other';} 
+    }      
+
+    public function role()
+    {
+        if ($this->role == 1) { return 'Quality Assurance Manager';} 
+        if ($this->role == 2) { return 'QA coordinator';} 
+        if ($this->role == 3) { return 'Staff';} 
+        if ($this->role == 4) { return 'Sysadmin';} 
+    }    
+
+    public function staffType()
+    {
+        if ($this->staff_type == 1) { return 'Academic';} 
+        if ($this->staff_type == 2) { return 'Support';} 
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
+    public function comment()
+    {
+        return $this->hasOne(Comment::class);
     }
 }

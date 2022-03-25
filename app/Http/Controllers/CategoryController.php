@@ -45,7 +45,7 @@ class CategoryController extends Controller
 
         Category::create($data);
 
-        return redirect()->route('categories.index')->with('success','Category Created Successfully!');
+        return redirect()->route('categories.index')->with('success', 'Saved Successfully.');
     }
 
     /**
@@ -85,8 +85,9 @@ class CategoryController extends Controller
         ]);
 
          $category->update($data);
-
-         return redirect()->route('categories.index')->with('success','Category Updated Successfully!');
+        $request->session()->flash('message', 'New customer added successfully.');
+        return response()->json(['status'=>'Hooray']);
+         // return redirect()->route('categories.index')->with('success', 'Updated Successfully.');
     }
 
     /**
@@ -98,6 +99,6 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-         return redirect()->route('categories.index')->with('success','Category Deleted Successfully!');
+         return redirect()->route('categories.index');
     }
 }
